@@ -525,7 +525,7 @@ class MainScenario(
                         listOf(KeyboardButton("Он не компилируется, так как List – immutable")),
                         listOf(KeyboardButton("[1, 2, 3, 4]")),
                         listOf(KeyboardButton("[5, 6, 7]")),
-                        listOf(KeyboardButton("Он не компилируется, из-за вызова listOf"))))
+                        listOf(KeyboardButton("Он не компилируется из-за вызова listOf"))))
                 )
             }
         }
@@ -534,7 +534,7 @@ class MainScenario(
             activators {
                 regex("Он не компилируется, так как List – immutable")
                 regex("\\[1, 2, 3, 4\\]")
-                regex("Он не компилируется, из-за listOf")
+                regex("Он не компилируется из-за вызова listOf")
                 regex("\\[5, 6, 7\\]")
             }
             action {
