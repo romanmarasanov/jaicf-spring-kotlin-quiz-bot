@@ -11,7 +11,6 @@ group = "com.justai.jaicf"
 version = "1.0.0"
 
 val jaicf = "1.2.4"
-val logback = "1.4.3"
 
 repositories {
     mavenLocal()
@@ -23,7 +22,6 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation("ch.qos.logback:logback-classic:$logback")
     implementation("com.just-ai.jaicf:telegram:$jaicf")
     implementation("com.just-ai.jaicf:core:$jaicf")
     implementation("com.just-ai.jaicf:jaicp:$jaicf")
@@ -46,7 +44,7 @@ tasks {
     }
     bootJar {
         archiveFileName.set("app.jar")
-        mainClass.set("com.justai.jaicf.spring.ApplicationKt")
+        mainClass.set("com.justai.jaicf.spring.Application")
     }
 }
 
