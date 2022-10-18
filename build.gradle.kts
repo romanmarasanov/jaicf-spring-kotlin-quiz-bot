@@ -1,19 +1,17 @@
 plugins {
     application
     kotlin("jvm") version "1.4.21"
+    kotlin("plugin.spring") version "1.4.21"
+    id("org.springframework.boot") version "2.4.4"
+    id("io.spring.dependency-management") version "1.0.8.RELEASE"
     id("com.justai.jaicf.jaicp-build-plugin") version "0.1.1"
 }
 
 group = "com.justai.jaicf"
 version = "1.0.0"
 
-val jaicf = "1.2.2"
-val logback = "1.2.3"
-
-// Main class to run application on heroku. Either JaicpPollerKt, or JaicpServerKt. Will propagate to .jar main class.
-application {
-    mainClassName = "com.justai.jaicf.template.connections.JaicpServerKt"
-}
+val jaicf = "1.2.4"
+val logback = "1.4.3"
 
 repositories {
     mavenLocal()
@@ -23,13 +21,20 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
 
     implementation("ch.qos.logback:logback-classic:$logback")
-
+    implementation("com.just-ai.jaicf:telegram:$jaicf")
     implementation("com.just-ai.jaicf:core:$jaicf")
     implementation("com.just-ai.jaicf:jaicp:$jaicf")
     implementation("com.just-ai.jaicf:caila:$jaicf")
+
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    runtimeOnly("org.postgresql:postgresql")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks {
@@ -39,15 +44,12 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
-    shadowJar {
+    bootJar {
         archiveFileName.set("app.jar")
+        mainClass.set("com.justai.jaicf.spring.ApplicationKt")
     }
 }
 
 tasks.create("stage") {
-    dependsOn("shadowJar")
-}
-
-tasks.withType<com.justai.jaicf.plugins.jaicp.build.JaicpBuild> {
-    mainClassName.set(application.mainClassName)
+    dependsOn("bootJar")
 }
