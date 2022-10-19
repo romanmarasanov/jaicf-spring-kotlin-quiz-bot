@@ -3,4 +3,5 @@ Created from [JustAI simple bot template](https://github.com/just-ai/jaicf-jaicp
 
 General additions:\
 • Now it is spring boot application \
-• Using spring-jdbc for database access
+• Using spring-jdbc for database access \
+• PostgreSQL is used for saving user's points
